@@ -76,7 +76,10 @@ const [previewingTemplate, setPreviewingTemplate] = useState<Template | null>(nu
   name: string;
 }
 
-function handleSomething(value: ApiResponse) { ... }
+function handleSomething(value: ApiResponse) {
+  // TODO: implement handling logic
+}
+
 
   
   // Help & Docs States
