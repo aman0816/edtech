@@ -2,8 +2,24 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Credential } from '../../types/credential';
 
+
+interface Credential {
+  id: number;
+  recipientEmail: string;
+  recipientName: string;
+  schemaId: number;
+  schemaName: string;
+  issuedDate: string;
+  status: string;
+  additionalData: {
+    skills: string[];
+    score: number;
+    projectType?: string;
+    duration?: string;
+    grade?: string;
+  };
+}
 
 interface CertificateTemplate {
   id: number;
