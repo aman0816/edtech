@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 // Add at the top, after imports
-type CredentialAdditionalData = {
-  projectType: string;
-  duration: number;
-  grade: string;
+type AdditionalData = {
+  projectType?: string;
+  duration?: number;
+  grade?: string;
   skills?: string[];
   score?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 interface CertificateTemplate {
@@ -522,7 +522,7 @@ export default function DigitalCertificateIssuer() {
       return;
     }
 
-    let parsedAdditionalData: any = {};
+    let parsedAdditionalData: AdditionalData = {};
     if (issueForm.additionalData) {
       try {
         parsedAdditionalData = JSON.parse(issueForm.additionalData);
@@ -544,11 +544,11 @@ export default function DigitalCertificateIssuer() {
       issuedDate: new Date().toISOString().split('T')[0],
       status: 'Delivered',
       additionalData: {
-        projectType: parsedAdditionalData?.projectType ?? "",
-        duration: parsedAdditionalData?.duration ?? 0,
-        grade: parsedAdditionalData?.grade ?? "",
-        skills: parsedAdditionalData?.skills ?? [],
-        score: parsedAdditionalData?.score ?? 0
+        projectType: parsedAdditionalData.projectType ?? "",
+        duration: parsedAdditionalData.duration ?? 0,
+        grade: parsedAdditionalData.grade ?? "",
+        skills: parsedAdditionalData.skills ?? [],
+        score: parsedAdditionalData.score ?? 0
       }
     };
 
