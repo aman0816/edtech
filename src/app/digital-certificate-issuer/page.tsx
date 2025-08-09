@@ -3,6 +3,28 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface CertificateTemplate {
+  id: number;
+  name: string;
+  certificateName: string;
+  course: string;
+  design: string;
+  status: string;
+  includeStudentName: boolean;
+  includeCertificateId: boolean;
+  certificateIdPrefix: string;
+  description?: string;
+}
+
+interface EmailTemplate {
+  id: number;
+  name: string;
+  subject: string;
+  body: string;
+  type: string;
+  status: string;
+}
+
 export default function DigitalCertificateIssuer() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [activeSubSection, setActiveSubSection] = useState('overview');
@@ -12,7 +34,7 @@ export default function DigitalCertificateIssuer() {
   const [showEditCertificateTemplateForm, setShowEditCertificateTemplateForm] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [editingTemplateId, setEditingTemplateId] = useState<number | null>(null);
-  const [previewingTemplate, setPreviewingTemplate] = useState<any>(null);
+  const [previewingTemplate, setPreviewingTemplate] = useState<CertificateTemplate | null>(null);
   const [certificateTemplateForm, setCertificateTemplateForm] = useState({
     name: '',
     certificateName: '',
@@ -23,7 +45,7 @@ export default function DigitalCertificateIssuer() {
     includeCertificateId: true,
     certificateIdPrefix: 'CERT'
   });
-  const [certificateTemplates, setCertificateTemplates] = useState([
+  const [certificateTemplates, setCertificateTemplates] = useState<CertificateTemplate[]>([
     {
       id: 1,
       name: 'Default Certificate',
@@ -64,14 +86,12 @@ export default function DigitalCertificateIssuer() {
   const [showEditEmailTemplateForm, setShowEditEmailTemplateForm] = useState(false);
   const [showEmailPreviewModal, setShowEmailPreviewModal] = useState(false);
   const [editingEmailTemplateId, setEditingEmailTemplateId] = useState<number | null>(null);
-  const [previewingEmailTemplate, setPreviewingEmailTemplate] = useState<any>(null);
+  const [previewingEmailTemplate, setPreviewingEmailTemplate] = useState<EmailTemplate | null>(null);
   
   // Help & Docs States
   const [activeHelpSection, setActiveHelpSection] = useState<string>('guides');
   const [selectedGuide, setSelectedGuide] = useState<string | null>(null);
   const [showGuideModal, setShowGuideModal] = useState(false);
-  const [showApiDocs, setShowApiDocs] = useState(false);
-  const [showCodeExamples, setShowCodeExamples] = useState(false);
   
   // Organization States
   const [activeOrgSection, setActiveOrgSection] = useState<string>('profile');
@@ -170,7 +190,7 @@ export default function DigitalCertificateIssuer() {
     type: 'credential_issuance',
     status: 'Active'
   });
-  const [emailTemplates, setEmailTemplates] = useState([
+  const [emailTemplates, setEmailTemplates] = useState<EmailTemplate[]>([
     {
       id: 1,
       name: 'Default Credential Email',
@@ -496,7 +516,7 @@ export default function DigitalCertificateIssuer() {
     if (issueForm.additionalData) {
       try {
         parsedAdditionalData = JSON.parse(issueForm.additionalData);
-      } catch (error) {
+      } catch {
         alert('Invalid JSON format for additional data');
         return;
       }
@@ -658,7 +678,7 @@ export default function DigitalCertificateIssuer() {
   };
 
   // Generate unique certificate ID
-  const generateCertificateId = (template: any) => {
+  const generateCertificateId = (template: CertificateTemplate) => {
     const year = new Date().getFullYear();
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     const prefix = template.certificateIdPrefix || 'CERT';
