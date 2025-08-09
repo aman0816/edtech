@@ -3308,17 +3308,20 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
 
   // Load departments from localStorage on mount
   useEffect(() => {
-    const savedDepartments = localStorage.getItem('departments');
+    const savedDepartments = localStorage.getItem("departments");
     if (savedDepartments) {
       try {
         const parsed = JSON.parse(savedDepartments);
         if (Array.isArray(parsed)) setDepartments(parsed);
-      } catch {}
+      } catch {
+        // Ignore parse errors
+      }
     }
   }, []);
+
   // Save departments to localStorage whenever they change
   useEffect(() => {
-    localStorage.setItem('departments', JSON.stringify(departments));
+    localStorage.setItem("departments", JSON.stringify(departments));
   }, [departments]);
 
   return (
