@@ -1259,17 +1259,20 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
       alert('Please fill in all required fields');
       return;
     }
+    const newId = departments.length > 0 ? Math.max(...departments.map(d => d.id)) + 1 : 1;
+
  const newDepartment: Department = {
-  id: someId,
+  id: newId,
   name: departmentForm.name,
   description: departmentForm.description,
   manager: departmentForm.manager,
-  roles: [], // or get from form input if available
+  roles: [],
   members: departmentForm.members,
-  memberCount: departmentForm.members.length, // optional
+  memberCount: departmentForm.members.length // if you want this
 };
 
 setDepartments(prev => [...prev, newDepartment]);
+
 
     setDepartmentForm({ name: '', description: '', manager: '', roles: [], members: [] });
     setShowDepartmentForm(false);
