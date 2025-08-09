@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 
-interface Credential {
+interface CredentialWithSkills {
   id: number;
   recipientEmail: string;
   recipientName: string;
@@ -15,11 +15,30 @@ interface Credential {
   additionalData: {
     skills: string[];
     score: number;
-    projectType?: string;
-    duration?: string;
-    grade?: string;
+    projectType?: never;
+    duration?: never;
+    grade?: never;
   };
 }
+
+interface CredentialWithProject {
+  id: number;
+  recipientEmail: string;
+  recipientName: string;
+  schemaId: number;
+  schemaName: string;
+  issuedDate: string;
+  status: string;
+  additionalData: {
+    projectType: string;
+    duration: string;  // changed from number to string to match your original
+    grade: string;
+    skills?: never;
+    score?: never;
+  };
+}
+
+type Credential = CredentialWithSkills | CredentialWithProject;
 
 interface CertificateTemplate {
   id: number;
