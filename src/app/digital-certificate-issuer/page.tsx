@@ -2132,6 +2132,14 @@ setDepartments(prev => [...prev, newDepartment]);
                               {cred.status}
                             </span>
                             {cred.status === 'Delivered' && (
+                          const handleMarkAccepted = (id: number) => {
+  setIssuedCredentials(prev =>
+    prev.map(cred =>
+      cred.id === id ? { ...cred, status: 'Accepted' } : cred
+    )
+  );
+};
+
                               <button
                                 className="ml-2 text-xs text-green-700 hover:underline"
                                 onClick={() => handleMarkAccepted(cred.id)}
