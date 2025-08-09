@@ -378,29 +378,29 @@ export default function DigitalCertificateIssuer() {
     }
   }, [schemas]);
 
-  // Credential issuance state
-  const [issuedCredentials, setIssuedCredentials] = useState([
-    {
-      id: 1,
-      recipientEmail: 'john.doe@example.com',
-      recipientName: 'John Doe',
-      schemaId: 1,
-      schemaName: 'Software Development Certification',
-      issuedDate: '2024-01-15',
-      status: 'Accepted', // Delivered, Accepted, Revoked
-      additionalData: { skills: ['JavaScript', 'React'], score: 95 }
-    },
-    {
-      id: 2,
-      recipientEmail: 'jane.smith@example.com',
-      recipientName: 'Jane Smith',
-      schemaId: 2,
-      schemaName: 'Project Management Certificate',
-      issuedDate: '2024-01-14',
-      status: 'Delivered',
-      additionalData: { projectType: 'Web Development', duration: 6, grade: 'A' }
-    }
-  ]);
+const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
+  {
+    id: 1,
+    recipientEmail: 'john.doe@example.com',
+    recipientName: 'John Doe',
+    schemaId: 1,
+    schemaName: 'Software Development Certification',
+    issuedDate: '2024-01-15',
+    status: 'Accepted',
+    additionalData: { skills: ['JavaScript', 'React'], score: 95, projectType: undefined, duration: undefined, grade: undefined }
+  },
+  {
+    id: 2,
+    recipientEmail: 'jane.smith@example.com',
+    recipientName: 'Jane Smith',
+    schemaId: 2,
+    schemaName: 'Project Management Certificate',
+    issuedDate: '2024-01-14',
+    status: 'Delivered',
+    additionalData: { projectType: 'Web Development', duration: 6, grade: 'A', skills: undefined, score: undefined }
+  }
+]);
+
 
   // Load issued credentials from localStorage on component mount
   useEffect(() => {
