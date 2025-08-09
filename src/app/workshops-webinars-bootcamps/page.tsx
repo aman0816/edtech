@@ -57,9 +57,11 @@ export default function WorkshopsWebinarsBootcamps() {
           <p className="text-lg mb-6 max-w-3xl mx-auto" style={{ color: '#4F564F' }}>
             We help EdTech platforms, colleges, and institutions deliver expert-led training programs—customized to your audience, powered by our diverse network of mentors, and fully managed by us.
           </p>
-          <p className="text-lg max-w-3xl mx-auto" style={{ color: '#4F564F' }}>
-            Whether you need a quick 1-hour session or a full-year curriculum rollout, just tell us the <span className="font-bold" style={{ color: '#3D4D40' }}>domain, duration, and target audience</span>—we'll handle the rest.
-          </p>
+         <p className="text-lg max-w-3xl mx-auto" style={{ color: '#4F564F' }}>
+  Whether you need a quick 1-hour session or a full-year curriculum rollout, just tell us the{' '}
+  <span className="font-bold" style={{ color: '#3D4D40' }}>domain, duration, and target audience</span>
+  —we&apos;ll handle the rest.
+</p>
         </div>
       </section>
 
@@ -206,10 +208,15 @@ export default function WorkshopsWebinarsBootcamps() {
             <h4 className="font-semibold text-lg mb-3 text-center" style={{ color: '#3D4D40' }}>You deliver a branded, high-impact learning experience—stress-free</h4>
           </div>
         </div>
-        <div className="text-center mt-12 fade-in-up delay-300">
-          <p className="text-xl font-medium mb-4" style={{ color: '#3D4D40' }}>Focus on learner growth. We'll handle the backend.</p>
-          <p className="text-lg" style={{ color: '#4F564F' }}>Deliver quality education—without building everything from scratch.</p>
-        </div>
+     <div className="text-center mt-12 fade-in-up delay-300">
+  <p className="text-xl font-medium mb-4" style={{ color: '#3D4D40' }}>
+    Focus on learner growth. We&apos;ll handle the backend.
+  </p>
+  <p className="text-lg" style={{ color: '#4F564F' }}>
+    Deliver quality education—without building everything from scratch.
+  </p>
+</div>
+
       </section>
 
       {/* CTA Section */}
@@ -245,7 +252,7 @@ export default function WorkshopsWebinarsBootcamps() {
             {consultationSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll contact you soon.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll contact you soon.</p>
               </div>
             ) : (
               <form onSubmit={handleConsultationSubmit} className="space-y-4">
@@ -319,7 +326,7 @@ export default function WorkshopsWebinarsBootcamps() {
             {proposalSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll send you a custom proposal soon.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll send you a custom proposal soon.</p>
               </div>
             ) : (
               <form onSubmit={handleProposalSubmit} className="space-y-4">
@@ -409,7 +416,7 @@ export default function WorkshopsWebinarsBootcamps() {
             {trainingSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll get your training session started soon.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll get your training session started soon.</p>
               </div>
             ) : (
               <form onSubmit={handleTrainingSubmit} className="space-y-4">
