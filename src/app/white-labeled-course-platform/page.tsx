@@ -176,7 +176,11 @@ export default function WhiteLabeledCoursePlatform() {
                 </span>
                 <span className="font-medium">Training academies aiming to deliver online learning with ease</span>
               </li>
-              <li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }>
+             <li
+  className="flex items-start gap-3 text-base md:text-lg"
+  style={{ color: '#3D4D40' }}
+>
+
                 <span className="mt-0.5" aria-hidden="true">
                   <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="10" cy="10" r="10" fill="#A3C9A8"/>
