@@ -3,6 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+export default function DigitalCertificateIssuer() {
+  // your states, handlers, JSX here
+}
+
 type AdditionalData = {
   projectType?: string;
   duration?: number;
@@ -2075,93 +2079,103 @@ setDepartments(prev => [...prev, newDepartment]);
                 </div>
               </div>
 
-              {/* Table */}
-              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-                <table className="w-full">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left">
-                        <input type="checkbox" className="rounded" />
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connected Through</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schema</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credential Attributes</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {credentialsLoading ? (
-                      <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center">
-                          <div className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
-                            <span className="ml-2 text-gray-500">Loading credentials...</span>
-                          </div>
-                        </td>
-                      </tr>
-                    ) : filteredCredentials.length === 0 ? (
-                      <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center text-gray-500">No credentials found.</td>
-                      </tr>
-                    ) : (
-                      filteredCredentials.map((cred) => (
-                        <tr key={cred.id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <input type="checkbox" className="rounded" />
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">{cred.recipientName}</div>
-                            <div className="text-sm text-gray-500">{cred.recipientEmail}</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{cred.schemaName}</td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            {cred.additionalData && typeof cred.additionalData === 'object'
-                              ? Object.entries(cred.additionalData).map(([k, v]) => `${k}: ${v}`).join(', ')
-                              : '-'}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 py-1 rounded text-xs ${
-                              cred.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                              cred.status === 'Delivered' ? 'bg-blue-100 text-blue-800' :
-                              cred.status === 'Revoked' ? 'bg-red-100 text-red-800' :
-                              cred.status === 'Error' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-gray-100 text-gray-800'
-                            }`}>
-                              {cred.status}
-                            </span>
-                            {cred.status === 'Delivered' && (
-                        
+              // Your issuedCredentials state example (adjust if you have it already)
+  const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
+    // initial credentials here...
+  ]);
 
-                              <button
-                                className="ml-2 text-xs text-green-700 hover:underline"
-                                onClick={() => handleMarkAccepted(cred.id)}
-                              >
-                                Mark Accepted
-                              </button>
-                            )}
-                            {cred.status !== 'Revoked' && (
-                              <button
-                                className="ml-2 text-xs text-red-700 hover:underline"
-                                onClick={() => handleRevoke(cred.id)}
-                              >
-                                Revoke
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      ))
+  // Add the handler functions *before* the return statement
+  const handleMarkAccepted = (id: number) => {
+    setIssuedCredentials(prev =>
+      prev.map(cred =>
+        cred.id === id ? { ...cred, status: 'Accepted' } : cred
+      )
+    );
+  };
+
+  const handleRevoke = (id: number) => {
+    setIssuedCredentials(prev =>
+      prev.map(cred =>
+        cred.id === id ? { ...cred, status: 'Revoked' } : cred
+      )
+    );
+  };
+
+  // Now put your JSX *inside* the return statement
+  return (
+    <div>
+      {/* Table */}
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left">
+                <input type="checkbox" className="rounded" />
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connected Through</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schema</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credential Attributes</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {issuedCredentials.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-6 py-12 text-center text-gray-500">No credentials found.</td>
+              </tr>
+            ) : (
+              issuedCredentials.map((cred) => (
+                <tr key={cred.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <input type="checkbox" className="rounded" />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900">{cred.recipientName}</div>
+                    <div className="text-sm text-gray-500">{cred.recipientEmail}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{cred.schemaName}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {cred.additionalData && typeof cred.additionalData === 'object'
+                      ? Object.entries(cred.additionalData).map(([k, v]) => `${k}: ${v}`).join(', ')
+                      : '-'}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 py-1 rounded text-xs ${
+                      cred.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                      cred.status === 'Delivered' ? 'bg-blue-100 text-blue-800' :
+                      cred.status === 'Revoked' ? 'bg-red-100 text-red-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {cred.status}
+                    </span>
+                    {cred.status === 'Delivered' && (
+                      <button
+                        className="ml-2 text-xs text-green-700 hover:underline"
+                        onClick={() => handleMarkAccepted(cred.id)}
+                      >
+                        Mark Accepted
+                      </button>
                     )}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
+                    {cred.status !== 'Revoked' && (
+                      <button
+                        className="ml-2 text-xs text-red-700 hover:underline"
+                        onClick={() => handleRevoke(cred.id)}
+                      >
+                        Revoke
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
     if (activeSubSection === 'schemas') {
       return (
         <div className="space-y-6">
