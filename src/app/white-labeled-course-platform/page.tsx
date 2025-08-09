@@ -180,10 +180,8 @@ export default function WhiteLabeledCoursePlatform() {
   <span className="font-medium">
     Coaching institutes wanting to digitize and expand their reach
   </span>
-</li>
-  className="flex items-start gap-3 text-base md:text-lg"
-  style={{ color: '#3D4D40' }}
->
+<li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }}>
+
   <span className="mt-0.5" aria-hidden="true">
     {/* icon or SVG */}
   </span>
