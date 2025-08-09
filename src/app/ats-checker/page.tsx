@@ -2,16 +2,30 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 
-export default function ATSChecker() {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [atsScore, setAtsScore] = useState(null);
-  const [scoreBreakdown, setScoreBreakdown] = useState(null);
-  const [suggestions, setSuggestions] = useState([]);
-  const fileInputRef = useRef(null);
+interface ScoreBreakdown {
+  formatting: number;
+  keywords: number;
+  roleRelevance: number;
+  contentQuality: number;
+  structure: number;
+}
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
+interface Suggestion {
+  category: string;
+  suggestion: string;
+  priority: string;
+}
+
+export default function ATSChecker() {
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [atsScore, setAtsScore] = useState<number | null>(null);
+  const [scoreBreakdown, setScoreBreakdown] = useState<ScoreBreakdown | null>(null);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
     if (file) {
       console.log('File selected for ATS analysis:', file.name);
       setUploadedFile(file);
@@ -75,11 +89,11 @@ export default function ATSChecker() {
     }
   };
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     if (file) {
@@ -139,21 +153,21 @@ export default function ATSChecker() {
     }
   };
 
-  const getScoreColor = (score) => {
+  const getScoreColor = (score: number) => {
     if (score >= 90) return 'text-green-600';
     if (score >= 80) return 'text-blue-600';
     if (score >= 70) return 'text-yellow-600';
     return 'text-red-600';
   };
 
-  const getScoreBgColor = (score) => {
+  const getScoreBgColor = (score: number) => {
     if (score >= 90) return 'bg-green-100';
     if (score >= 80) return 'bg-blue-100';
     if (score >= 70) return 'bg-yellow-100';
     return 'bg-red-100';
   };
 
-  const getPriorityColor = (priority) => {
+  const getPriorityColor = (priority: string) => {
     if (priority === 'High') return 'text-red-600 bg-red-100';
     if (priority === 'Medium') return 'text-yellow-600 bg-yellow-100';
     return 'text-green-600 bg-green-100';
