@@ -12,14 +12,7 @@ export default function DigitalCertificateIssuer() {
   const [showEditCertificateTemplateForm, setShowEditCertificateTemplateForm] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [editingTemplateId, setEditingTemplateId] = useState<number | null>(null);
-  interface Template {
-  id: string;
-  name: string;
-  content: string;
-}
-
-const [previewingTemplate, setPreviewingTemplate] = useState<Template | null>(null);
-
+  const [previewingTemplate, setPreviewingTemplate] = useState<any>(null);
   const [certificateTemplateForm, setCertificateTemplateForm] = useState({
     name: '',
     certificateName: '',
@@ -71,16 +64,7 @@ const [previewingTemplate, setPreviewingTemplate] = useState<Template | null>(nu
   const [showEditEmailTemplateForm, setShowEditEmailTemplateForm] = useState(false);
   const [showEmailPreviewModal, setShowEmailPreviewModal] = useState(false);
   const [editingEmailTemplateId, setEditingEmailTemplateId] = useState<number | null>(null);
- interface ApiResponse {
-  id: string;
-  name: string;
-}
-
-function handleSomething(value: ApiResponse) {
-  // TODO: implement handling logic
-}
-
-
+  const [previewingEmailTemplate, setPreviewingEmailTemplate] = useState<any>(null);
   
   // Help & Docs States
   const [activeHelpSection, setActiveHelpSection] = useState<string>('guides');
@@ -674,17 +658,7 @@ function handleSomething(value: ApiResponse) {
   };
 
   // Generate unique certificate ID
- interface CertificateTemplate {
-  id: string;
-  title: string;
-  fields: string[];
-  backgroundUrl: string;
-}
-
-const generateCertificateId = (template: CertificateTemplate) => {
-  // ...
-};
-
+  const generateCertificateId = (template: any) => {
     const year = new Date().getFullYear();
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     const prefix = template.certificateIdPrefix || 'CERT';
@@ -3165,6 +3139,32 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
     );
   };
 
+  // Add sidebarOpen state
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  // On mount, load logoPreview from localStorage if present
+  useEffect(() => {
+    const savedLogoPreview = localStorage.getItem('organization-logo-preview');
+    if (savedLogoPreview) {
+      setOrganizationForm(prev => ({ ...prev, logoPreview: savedLogoPreview }));
+    }
+  }, []);
+
+  // Load departments from localStorage on mount
+  useEffect(() => {
+    const savedDepartments = localStorage.getItem('departments');
+    if (savedDepartments) {
+      try {
+        const parsed = JSON.parse(savedDepartments);
+        if (Array.isArray(parsed)) setDepartments(parsed);
+      } catch {}
+    }
+  }, []);
+  // Save departments to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('departments', JSON.stringify(departments));
+  }, [departments]);
+
   const renderHelp = () => (
     <div className="space-y-6">
       {/* Breadcrumbs */}
@@ -3295,118 +3295,84 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
     </div>
   );
 
-const [sidebarOpen, setSidebarOpen] = useState(true);
-
-// On mount, load logoPreview from localStorage if present
-useEffect(() => {
-  const savedLogoPreview = localStorage.getItem('organization-logo-preview');
-  if (savedLogoPreview) {
-    setOrganizationForm(prev => ({ ...prev, logoPreview: savedLogoPreview }));
-  }
-}, []);
-
-// Load departments from localStorage on mount
-useEffect(() => {
-  const savedDepartments = localStorage.getItem("departments");
-  if (savedDepartments) {
-    try {
-      const parsed = JSON.parse(savedDepartments);
-      if (Array.isArray(parsed)) setDepartments(parsed);
-    } catch {
-      // Ignore parse errors
-    }
-  }
-}, []);
-
-// Save departments to localStorage whenever they change
-useEffect(() => {
-  localStorage.setItem("departments", JSON.stringify(departments));
-}, [departments]);
-
-return (
-  <div className="min-h-screen bg-gray-50">
-    {/* Header */}
-    <header className="bg-white shadow-sm border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <div className="flex items-center space-x-4">
+                {!sidebarOpen && (
+                  <button
+                    className="text-blue-600 hover:text-blue-800 mr-4"
+                    onClick={() => setSidebarOpen(true)}
+                    aria-label="Open Menu"
+                  >
+                    ☰ Open Menu
+                  </button>
+                )}
+                <Link href="/" className="text-xl font-bold text-gray-900">
+                  ← Back to Home
+                </Link>
+                {/* Removed branding and org admin info */}
+              </div>
+            </div>
             <div className="flex items-center space-x-4">
-              {!sidebarOpen && (
-                <button
-                  className="text-blue-600 hover:text-blue-800 mr-4"
-                  onClick={() => setSidebarOpen(true)}
-                  aria-label="Open Menu"
-                >
-                  ☰ Open Menu
-                </button>
-              )}
-              <Link href="/" className="text-xl font-bold text-gray-900">
-                ← Back to Home
-              </Link>
+              {/* Keep notification/profile icons if needed */}
+              <button className="relative p-2 text-gray-600 hover:text-gray-900">
+                <span className="text-lg">🔔</span>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">1</span>
+              </button>
+              <button className="text-gray-600 hover:text-gray-900">👤</button>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <button className="relative p-2 text-gray-600 hover:text-gray-900">
-              <span className="text-lg">🔔</span>
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                1
-              </span>
-            </button>
-            <button className="text-gray-600 hover:text-gray-900">👤</button>
-          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar - Dark Blue like DICE ID Console */}
-      {sidebarOpen && (
-        <div className="w-64 bg-blue-900 text-white">
-          <div className="p-4">
-            <button
-              className="w-full text-left px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 rounded-md mb-4"
-              onClick={() => setSidebarOpen(false)}
-              aria-label="Close Menu"
-            >
-              ✕ Close Menu
-            </button>
-
-            <nav className="space-y-1">
+      <div className="flex h-screen bg-gray-50">
+        {/* Sidebar - Dark Blue like DICE ID Console */}
+        {sidebarOpen && (
+          <div className="w-64 bg-blue-900 text-white">
+            <div className="p-4">
               <button
-                onClick={() => setActiveSection('dashboard')}
-                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium ${
-                  activeSection === 'dashboard'
-                    ? 'bg-blue-700 text-white'
-                    : 'text-blue-100 hover:bg-blue-800'
-                }`}
+                className="w-full text-left px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 rounded-md mb-4"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Close Menu"
               >
-                📊 Dashboard
+                ✕ Close Menu
               </button>
-
-              <div className="mt-4">
+              
+              <nav className="space-y-1">
                 <button
-                  onClick={() => setActiveSection('credentials')}
-                  className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between ${
-                    activeSection === 'credentials'
-                      ? 'bg-blue-700 text-white'
-                      : 'text-blue-100 hover:bg-blue-800'
+                  onClick={() => setActiveSection('dashboard')}
+                  className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium ${
+                    activeSection === 'dashboard' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-800'
                   }`}
                 >
-                  <span>🎓 Credentials</span>
-                  <span className="text-xs">▼</span>
+                  📊 Dashboard
                 </button>
-                {activeSection === 'credentials' && (
-                  <div className="ml-4 mt-2 space-y-1">
-                    <button
-                      onClick={() => setActiveSubSection('overview')}
-                      className={`w-full text-left px-3 py-1 rounded text-xs ${
-                        activeSubSection === 'overview'
-                          ? 'bg-blue-600 text-white'
-                          : 'text-blue-200 hover:bg-blue-700'
-                      }`}
-                    >
-                      Overview
-                    </button>
+                
+                <div className="mt-4">
+                  <button
+                    onClick={() => setActiveSection('credentials')}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between ${
+                      activeSection === 'credentials' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-800'
+                    }`}
+                  >
+                    <span>🎓 Credentials</span>
+                    <span className="text-xs">▼</span>
+                  </button>
+                  {activeSection === 'credentials' && (
+                    <div className="ml-4 mt-2 space-y-1">
+                      <button
+                        onClick={() => setActiveSubSection('overview')}
+                        className={`w-full text-left px-3 py-1 rounded text-xs ${
+                          activeSubSection === 'overview' ? 'bg-blue-600 text-white' : 'text-blue-200 hover:bg-blue-700'
+                        }`}
+                      >
+                        Overview
+                      </button>
                       <button
                         onClick={() => setActiveSubSection('schemas')}
                         className={`w-full text-left px-3 py-1 rounded text-xs ${
@@ -3780,15 +3746,15 @@ return (
                   className="w-full p-2 border border-gray-300 rounded-md"
                   placeholder="e.g. Note, Score, etc."
                 />
-              </div>  {/* closes previous div above buttons */}
-  <div className="flex space-x-3 justify-end">
-    <button type="button" onClick={() => setShowIssueNewModal(false)} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
-    <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Issue Credential</button>
-  </div>  {/* closes buttons container */}
-</form> {/* closes form */}
-</div> {/* closes div wrapping form */}
-</div> {/* closes outer div */}
-</div> {/* closes outermost div */}
-);
-}
-
+              </div>
+              <div className="flex space-x-3 justify-end">
+                <button type="button" onClick={() => setShowIssueNewModal(false)} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Issue Credential</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+} 
