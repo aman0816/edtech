@@ -1,3 +1,7 @@
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 export default function DigitalCertificateIssuer() {
   // Hooks and state declarations here
   const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
