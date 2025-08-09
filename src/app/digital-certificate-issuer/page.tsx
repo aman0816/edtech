@@ -3295,113 +3295,118 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
     </div>
   );
 
-  // Add sidebarOpen state
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // On mount, load logoPreview from localStorage if present
-  useEffect(() => {
-    const savedLogoPreview = localStorage.getItem('organization-logo-preview');
-    if (savedLogoPreview) {
-      setOrganizationForm(prev => ({ ...prev, logoPreview: savedLogoPreview }));
+// On mount, load logoPreview from localStorage if present
+useEffect(() => {
+  const savedLogoPreview = localStorage.getItem('organization-logo-preview');
+  if (savedLogoPreview) {
+    setOrganizationForm(prev => ({ ...prev, logoPreview: savedLogoPreview }));
+  }
+}, []);
+
+// Load departments from localStorage on mount
+useEffect(() => {
+  const savedDepartments = localStorage.getItem("departments");
+  if (savedDepartments) {
+    try {
+      const parsed = JSON.parse(savedDepartments);
+      if (Array.isArray(parsed)) setDepartments(parsed);
+    } catch {
+      // Ignore parse errors
     }
-  }, []);
+  }
+}, []);
 
-  // Load departments from localStorage on mount
-  useEffect(() => {
-    const savedDepartments = localStorage.getItem("departments");
-    if (savedDepartments) {
-      try {
-        const parsed = JSON.parse(savedDepartments);
-        if (Array.isArray(parsed)) setDepartments(parsed);
-      } catch {
-        // Ignore parse errors
-      }
-    }
-  }, []);
+// Save departments to localStorage whenever they change
+useEffect(() => {
+  localStorage.setItem("departments", JSON.stringify(departments));
+}, [departments]);
 
-  // Save departments to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("departments", JSON.stringify(departments));
-  }, [departments]);
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <div className="flex items-center space-x-4">
-                {!sidebarOpen && (
-                  <button
-                    className="text-blue-600 hover:text-blue-800 mr-4"
-                    onClick={() => setSidebarOpen(true)}
-                    aria-label="Open Menu"
-                  >
-                    ☰ Open Menu
-                  </button>
-                )}
-                <Link href="/" className="text-xl font-bold text-gray-900">
-                  ← Back to Home
-                </Link>
-                {/* Removed branding and org admin info */}
-              </div>
-            </div>
+return (
+  <div className="min-h-screen bg-gray-50">
+    {/* Header */}
+    <header className="bg-white shadow-sm border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center">
             <div className="flex items-center space-x-4">
-              {/* Keep notification/profile icons if needed */}
-              <button className="relative p-2 text-gray-600 hover:text-gray-900">
-                <span className="text-lg">🔔</span>
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">1</span>
-              </button>
-              <button className="text-gray-600 hover:text-gray-900">👤</button>
+              {!sidebarOpen && (
+                <button
+                  className="text-blue-600 hover:text-blue-800 mr-4"
+                  onClick={() => setSidebarOpen(true)}
+                  aria-label="Open Menu"
+                >
+                  ☰ Open Menu
+                </button>
+              )}
+              <Link href="/" className="text-xl font-bold text-gray-900">
+                ← Back to Home
+              </Link>
             </div>
           </div>
+          <div className="flex items-center space-x-4">
+            <button className="relative p-2 text-gray-600 hover:text-gray-900">
+              <span className="text-lg">🔔</span>
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                1
+              </span>
+            </button>
+            <button className="text-gray-600 hover:text-gray-900">👤</button>
+          </div>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <div className="flex h-screen bg-gray-50">
-        {/* Sidebar - Dark Blue like DICE ID Console */}
-        {sidebarOpen && (
-          <div className="w-64 bg-blue-900 text-white">
-            <div className="p-4">
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar - Dark Blue like DICE ID Console */}
+      {sidebarOpen && (
+        <div className="w-64 bg-blue-900 text-white">
+          <div className="p-4">
+            <button
+              className="w-full text-left px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 rounded-md mb-4"
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Close Menu"
+            >
+              ✕ Close Menu
+            </button>
+
+            <nav className="space-y-1">
               <button
-                className="w-full text-left px-3 py-2 text-sm font-medium text-white hover:bg-blue-800 rounded-md mb-4"
-                onClick={() => setSidebarOpen(false)}
-                aria-label="Close Menu"
+                onClick={() => setActiveSection('dashboard')}
+                className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium ${
+                  activeSection === 'dashboard'
+                    ? 'bg-blue-700 text-white'
+                    : 'text-blue-100 hover:bg-blue-800'
+                }`}
               >
-                ✕ Close Menu
+                📊 Dashboard
               </button>
-              
-              <nav className="space-y-1">
+
+              <div className="mt-4">
                 <button
-                  onClick={() => setActiveSection('dashboard')}
-                  className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium ${
-                    activeSection === 'dashboard' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-800'
+                  onClick={() => setActiveSection('credentials')}
+                  className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between ${
+                    activeSection === 'credentials'
+                      ? 'bg-blue-700 text-white'
+                      : 'text-blue-100 hover:bg-blue-800'
                   }`}
                 >
-                  📊 Dashboard
+                  <span>🎓 Credentials</span>
+                  <span className="text-xs">▼</span>
                 </button>
-                
-                <div className="mt-4">
-                  <button
-                    onClick={() => setActiveSection('credentials')}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium flex items-center justify-between ${
-                      activeSection === 'credentials' ? 'bg-blue-700 text-white' : 'text-blue-100 hover:bg-blue-800'
-                    }`}
-                  >
-                    <span>🎓 Credentials</span>
-                    <span className="text-xs">▼</span>
-                  </button>
-                  {activeSection === 'credentials' && (
-                    <div className="ml-4 mt-2 space-y-1">
-                      <button
-                        onClick={() => setActiveSubSection('overview')}
-                        className={`w-full text-left px-3 py-1 rounded text-xs ${
-                          activeSubSection === 'overview' ? 'bg-blue-600 text-white' : 'text-blue-200 hover:bg-blue-700'
-                        }`}
-                      >
-                        Overview
-                      </button>
+                {activeSection === 'credentials' && (
+                  <div className="ml-4 mt-2 space-y-1">
+                    <button
+                      onClick={() => setActiveSubSection('overview')}
+                      className={`w-full text-left px-3 py-1 rounded text-xs ${
+                        activeSubSection === 'overview'
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-200 hover:bg-blue-700'
+                      }`}
+                    >
+                      Overview
+                    </button>
                       <button
                         onClick={() => setActiveSubSection('schemas')}
                         className={`w-full text-left px-3 py-1 rounded text-xs ${
