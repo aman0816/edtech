@@ -44,7 +44,7 @@ export default function WhiteLabeledCoursePlatform() {
             No Development, No Delay, No Lakhs Spent
           </p>
           <p className="text-lg mb-8 max-w-3xl mx-auto" style={{ color: '#3D4D40' }}>
-            Are you an existing EdTech company tired of burning cash and time building your own courses and LMS? Or a new player wanting to launch FAST with a premium experience under your OWN BRAND? Stop wasting lakhs on course creation, LMS development, and content structuring. Let us do it for you — so you can scale, teach, and earn faster.
+            Are you an existing EdTech company tired of burning cash and time building your own courses and LMS? Or a new player wanting to launch FAST with a premium experience under your OWN BRAND? Stop wasting lakhs on course creation, LMS development, and content structuring. Let us do it for you &mdash; so you can scale, teach, and earn faster.
           </p>
         </div>
       </section>
@@ -78,21 +78,21 @@ export default function WhiteLabeledCoursePlatform() {
               <span className="text-3xl text-green-500 mt-1">🔒</span>
               <div>
                 <span className="font-semibold text-indigo-900 text-lg">100% White-Labeled Learning Platform</span>
-                <p className="text-gray-700">Your brand, your domain. Everything your students see — from login to certificate — carries your institution’s name and logo.</p>
+                <p className="text-gray-700">Your brand, your domain. Everything your students see &mdash; from login to certificate &mdash; carries your institution&rsquo;s name and logo.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 fade-in-up delay-100">
               <span className="text-3xl text-blue-500 mt-1">📦</span>
               <div>
                 <span className="font-semibold text-indigo-900 text-lg">20+ Preloaded Premium Courses</span>
-                <p className="text-gray-700">Instant access to expertly crafted, ready-to-deploy courses — with notes, quizzes, and assessments. You teach under your brand. We handle the backend.</p>
+                <p className="text-gray-700">Instant access to expertly crafted, ready-to-deploy courses &mdash; with notes, quizzes, and assessments. You teach under your brand. We handle the backend.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 fade-in-up delay-200">
               <span className="text-3xl text-yellow-500 mt-1">🚀</span>
               <div>
                 <span className="font-semibold text-indigo-900 text-lg">End-to-End Platform Ready in 72 Hours</span>
-                <p className="text-gray-700">No developers. No IT headaches. We do the full setup — from branding to platform configuration — and hand you the keys in just 3 days.</p>
+                <p className="text-gray-700">No developers. No IT headaches. We do the full setup &mdash; from branding to platform configuration &mdash; and hand you the keys in just 3 days.</p>
               </div>
             </div>
           </div>
@@ -101,21 +101,21 @@ export default function WhiteLabeledCoursePlatform() {
               <span className="text-3xl text-purple-500 mt-1">📈</span>
               <div>
                 <span className="font-semibold text-indigo-900 text-lg">Run Campaigns, Track Students</span>
-                <p className="text-gray-700">Full control to manage enrollments, monitor progress, run campaigns, and engage users — all on your branded dashboard.</p>
+                <p className="text-gray-700">Full control to manage enrollments, monitor progress, run campaigns, and engage users &mdash; all on your branded dashboard.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 fade-in-up delay-100">
               <span className="text-3xl text-pink-500 mt-1">🌟</span>
               <div>
-                <span className="font-semibold text-indigo-900 text-lg">Perfect for EXISTING EdTechs & New Players</span>
-                <p className="text-gray-700">Expand your portfolio, launch new programs, and grow faster — all while keeping your brand front and center.</p>
+                <span className="font-semibold text-indigo-900 text-lg">Perfect for EXISTING EdTechs &amp; New Players</span>
+                <p className="text-gray-700">Expand your portfolio, launch new programs, and grow faster &mdash; all while keeping your brand front and center.</p>
               </div>
             </div>
             <div className="flex items-start gap-4 fade-in-up delay-200">
               <span className="text-3xl text-orange-500 mt-1">💸</span>
               <div>
                 <span className="font-semibold text-indigo-900 text-lg">Why Spend ₹5–₹20 Lakhs or More?</span>
-                <p className="text-gray-700 mb-3">Building your own LMS and content library can drain your resources — development, content teams, UI/UX, integrations, and time. Instead, you can:</p>
+                <p className="text-gray-700 mb-3">Building your own LMS and content library can drain your resources &mdash; development, content teams, UI/UX, integrations, and time. Instead, you can:</p>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2 text-base"><span className="text-indigo-600 text-lg">•</span>Go live in 3 days</li>
                   <li className="flex items-center gap-2 text-base"><span className="text-indigo-600 text-lg">•</span>Save lakhs</li>
@@ -132,12 +132,12 @@ export default function WhiteLabeledCoursePlatform() {
           <div className="flex-1 flex flex-col items-center fade-in-up">
             <div className="w-32 h-32 bg-gradient-to-br from-indigo-200 to-indigo-100 rounded-lg mb-4 flex items-center justify-center text-5xl">📊</div>
             <div className="font-semibold text-indigo-900 mb-2">Student Dashboard</div>
-            <div className="text-gray-600 text-sm text-center">Track progress, view courses, and manage learning — all under your brand.</div>
+            <div className="text-gray-600 text-sm text-center">Track progress, view courses, and manage learning &mdash; all under your brand.</div>
           </div>
           <div className="flex-1 flex flex-col items-center fade-in-up delay-100">
             <div className="w-32 h-32 bg-gradient-to-br from-indigo-200 to-indigo-100 rounded-lg mb-4 flex items-center justify-center text-5xl">📚</div>
             <div className="font-semibold text-indigo-900 mb-2">Course Page</div>
-            <div className="text-gray-600 text-sm text-center">Engage with premium content, quizzes, and assessments — fully white-labeled.</div>
+            <div className="text-gray-600 text-sm text-center">Engage with premium content, quizzes, and assessments &mdash; fully white-labeled.</div>
           </div>
         </div>
 
@@ -167,7 +167,7 @@ export default function WhiteLabeledCoursePlatform() {
                 </span>
                 <span className="font-medium">Coaching institutes wanting to digitize and expand their reach</span>
               </li>
-              <li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }}>
+              <li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }>
                 <span className="mt-0.5" aria-hidden="true">
                   <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="10" cy="10" r="10" fill="#A3C9A8"/>
@@ -176,7 +176,7 @@ export default function WhiteLabeledCoursePlatform() {
                 </span>
                 <span className="font-medium">Training academies aiming to deliver online learning with ease</span>
               </li>
-              <li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }}>
+              <li className="flex items-start gap-3 text-base md:text-lg" style={{ color: '#3D4D40' }>
                 <span className="mt-0.5" aria-hidden="true">
                   <svg width="28" height="28" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="10" cy="10" r="10" fill="#A3C9A8"/>
@@ -193,7 +193,7 @@ export default function WhiteLabeledCoursePlatform() {
       {/* Final CTA Section */}
       <section className="max-w-4xl mx-auto mb-10 animate-fadeIn text-center">
         <h2 className="text-2xl font-bold mb-6" style={{ color: '#3D4D40' }}>Ready to Launch or Expand?</h2>
-        <p className="mb-6" style={{ color: '#3D4D40' }}>Whether you’re entering the market or looking to add more power to your existing EdTech brand, we give you the courses, the platform, and the speed — so you can focus on what you do best: educate and grow.</p>
+        <p className="mb-6" style={{ color: '#3D4D40' }}>Whether you&rsquo;re entering the market or looking to add more power to your existing EdTech brand, we give you the courses, the platform, and the speed &mdash; so you can focus on what you do best: educate and grow.</p>
         <div className="flex flex-col md:flex-row justify-center gap-4">
           <button
             className="bg-[#D4A373] hover:bg-[#b97d3a] text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition-all duration-200 animate-bounceOnce"
@@ -217,7 +217,7 @@ export default function WhiteLabeledCoursePlatform() {
             <button className="absolute top-3 right-3 text-2xl text-gray-400 hover:text-gray-700" onClick={() => setShowDemoModal(false)}>&times;</button>
             <h3 className="text-xl font-bold text-blue-800 mb-4">Book a Free Demo</h3>
             {demoSuccess ? (
-              <div className="text-green-600 font-semibold text-center py-8">Thank you! We'll contact you soon.</div>
+              <div className="text-green-600 font-semibold text-center py-8">Thank you! We&apos;ll contact you soon.</div>
             ) : (
               <form onSubmit={handleDemoSubmit} className="space-y-4">
                 <input
@@ -257,7 +257,7 @@ export default function WhiteLabeledCoursePlatform() {
             <button className="absolute top-3 right-3 text-2xl text-gray-400 hover:text-gray-700" onClick={() => setShowContactModal(false)}>&times;</button>
             <h3 className="text-xl font-bold text-blue-800 mb-4">Talk to Our Team</h3>
             {contactSuccess ? (
-              <div className="text-green-600 font-semibold text-center py-8">Thank you! We'll be in touch soon.</div>
+              <div className="text-green-600 font-semibold text-center py-8">Thank you! We&apos;ll be in touch soon.</div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <input
@@ -340,4 +340,4 @@ export default function WhiteLabeledCoursePlatform() {
       `}</style>
     </main>
   );
-} 
+}
