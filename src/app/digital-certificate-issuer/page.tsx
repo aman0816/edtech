@@ -533,7 +533,8 @@ export default function DigitalCertificateIssuer() {
       additionalData: parsedAdditionalData
     };
 
-    setIssuedCredentials(prev => [...prev, newCredential]);
+   setIssuedCredentials(prev => [...prev, newCredential as CredentialType]);
+
     
     // Reset form
     setIssueForm({
