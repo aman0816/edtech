@@ -3780,13 +3780,15 @@ return (
                   className="w-full p-2 border border-gray-300 rounded-md"
                   placeholder="e.g. Note, Score, etc."
                 />
-              </div>
-              <div className="flex space-x-3 justify-end">
-                <button type="button" onClick={() => setShowIssueNewModal(false)} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
-                <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Issue Credential</button>
-              </div>
-      </form>
-    </div>
-  </div>
-); // closes return (
-} // closes function
+              </div>  {/* closes previous div above buttons */}
+  <div className="flex space-x-3 justify-end">
+    <button type="button" onClick={() => setShowIssueNewModal(false)} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
+    <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Issue Credential</button>
+  </div>  {/* closes buttons container */}
+</form> {/* closes form */}
+</div> {/* closes div wrapping form */}
+</div> {/* closes outer div */}
+</div> {/* closes outermost div */}
+);
+}
+
