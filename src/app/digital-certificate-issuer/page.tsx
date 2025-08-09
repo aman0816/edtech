@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Credential } from 'path-to-types'; 
 
 interface CertificateTemplate {
   id: number;
@@ -533,7 +534,7 @@ export default function DigitalCertificateIssuer() {
       additionalData: parsedAdditionalData
     };
 
-   setIssuedCredentials(prev => [...prev, newCredential as CredentialType]);
+   setIssuedCredentials(prev => [...prev, newCredential as Credential]);
 
     
     // Reset form
