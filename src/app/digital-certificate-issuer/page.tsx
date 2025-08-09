@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-export default function DigitalCertificateIssuer() {
-  // Hooks and state declarations here
-  const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
-    // initial credentials here
-  ]);
+
 type AdditionalData = {
   projectType?: string;
   duration?: number;
@@ -2098,6 +2094,11 @@ setDepartments(prev => [...prev, newDepartment]);
       )
     );
   };
+     export default function DigitalCertificateIssuer() {
+
+  const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
+  
+  ]);
 
   // Now put your JSX *inside* the return statement
   return (
