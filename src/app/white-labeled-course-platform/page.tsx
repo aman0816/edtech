@@ -219,7 +219,7 @@ export default function WhiteLabeledCoursePlatform() {
             <button className="absolute top-3 right-3 text-2xl text-gray-400 hover:text-gray-700" onClick={() => setShowDemoModal(false)}>&times;</button>
             <h3 className="text-xl font-bold text-blue-800 mb-4">Book a Free Demo</h3>
             {demoSuccess ? (
-              <div className="text-green-600 font-semibold text-center py-8">Thank you! We'll contact you soon.</div>
+              <div className="text-green-600 font-semibold text-center py-8">Thank you! We&apos;ll contact you soon.</div>
             ) : (
               <form onSubmit={handleDemoSubmit} className="space-y-4">
                 <input
@@ -259,7 +259,7 @@ export default function WhiteLabeledCoursePlatform() {
             <button className="absolute top-3 right-3 text-2xl text-gray-400 hover:text-gray-700" onClick={() => setShowContactModal(false)}>&times;</button>
             <h3 className="text-xl font-bold text-blue-800 mb-4">Talk to Our Team</h3>
             {contactSuccess ? (
-              <div className="text-green-600 font-semibold text-center py-8">Thank you! We'll be in touch soon.</div>
+              <div className="text-green-600 font-semibold text-center py-8">Thank you! We&apos;ll be in touch soon.</div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <input
