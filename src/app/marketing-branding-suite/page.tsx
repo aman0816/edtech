@@ -59,7 +59,7 @@ export default function MarketingBrandingSuite() {
             Your learners are out there—searching, scrolling, and comparing. We help you reach them with the right message, at the right time, on the right platform.
           </p>
           <p className="text-lg text-gray-700 mb-12 max-w-3xl mx-auto fade-in-up delay-400">
-            From building visibility to earning trust, we become your marketing engine—fueling brand recognition, student engagement, and conversion pipelines. You focus on delivering world-class education—we'll make sure the right students are listening.
+            From building visibility to earning trust, we become your marketing engine—fueling brand recognition, student engagement, and conversion pipelines. You focus on delivering world-class education—we&apos;ll make sure the right students are listening.
           </p>
         </div>
       </section>
@@ -237,7 +237,7 @@ export default function MarketingBrandingSuite() {
 
       {/* CTA Section */}
       <section className="w-full max-w-4xl mx-auto py-16 px-4 text-center fade-in-up">
-        <h2 className="text-3xl font-bold text-indigo-900 mb-8">Let's Build Your Brand, Together</h2>
+        <h2 className="text-3xl font-bold text-indigo-900 mb-8">Let&apos;s Build Your Brand, Together</h2>
         <div className="flex flex-col md:flex-row justify-center gap-6">
           <button
             className="bg-gradient-to-r from-indigo-600 to-blue-400 hover:from-indigo-700 hover:to-blue-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition-all duration-200 animate-bounceOnce"
@@ -272,7 +272,7 @@ export default function MarketingBrandingSuite() {
             {consultationSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll contact you soon.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll contact you soon.</p>
               </div>
             ) : (
               <form onSubmit={handleConsultationSubmit} className="space-y-4">
@@ -346,7 +346,7 @@ export default function MarketingBrandingSuite() {
             {proposalSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll send you a tailored proposal soon.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll send you a tailored proposal soon.</p>
               </div>
             ) : (
               <form onSubmit={handleProposalSubmit} className="space-y-4">
@@ -436,7 +436,7 @@ export default function MarketingBrandingSuite() {
             {campaignSuccess ? (
               <div className="text-center">
                 <div className="text-6xl mb-4">✅</div>
-                <p className="text-green-600 font-semibold">Thank you! We'll launch your campaign within 48 hours.</p>
+                <p className="text-green-600 font-semibold">Thank you! We&apos;ll launch your campaign within 48 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleCampaignSubmit} className="space-y-4">
