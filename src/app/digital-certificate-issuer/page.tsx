@@ -11,6 +11,16 @@ type AdditionalData = {
   score?: number;
 };
 
+interface Department {
+  id: number;
+  name: string;
+  description: string;
+  manager: string;
+  roles: string[];
+  members: number[];
+  memberCount?: number; // optional, if you want to keep track of count separately
+}
+
 interface Credential {
   id: number;
   recipientEmail: string;
@@ -139,32 +149,33 @@ export default function DigitalCertificateIssuer() {
     department: ''
   });
   
-  const [departments, setDepartments] = useState([
-    {
-      id: 1,
-      name: 'IT Department',
-      description: 'Information Technology and Development',
-      manager: 'John Smith',
-      roles: [],
-      members: []
-    },
-    {
-      id: 2,
-      name: 'HR Department',
-      description: 'Human Resources and Administration',
-      manager: 'Lisa Chen',
-      roles: [],
-      members: []
-    },
-    {
-      id: 3,
-      name: 'Training Department',
-      description: 'Employee Training and Development',
-      manager: 'Mike Wilson',
-      roles: [],
-      members: []
-    }
-  ]);
+const [departments, setDepartments] = useState<Department[]>([
+  {
+    id: 1,
+    name: 'IT Department',
+    description: 'Information Technology and Development',
+    manager: 'John Smith',
+    roles: [],
+    members: []
+  },
+  {
+    id: 2,
+    name: 'HR Department',
+    description: 'Human Resources and Administration',
+    manager: 'Lisa Chen',
+    roles: [],
+    members: []
+  },
+  {
+    id: 3,
+    name: 'Training Department',
+    description: 'Employee Training and Development',
+    manager: 'Mike Wilson',
+    roles: [],
+    members: []
+  }
+]);
+
   
   const [users, setUsers] = useState([
     {
@@ -1248,15 +1259,18 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
       alert('Please fill in all required fields');
       return;
     }
-    const newDepartment = {
-      id: Math.max(...departments.map(d => d.id), 0) + 1,
-      name: departmentForm.name,
-      description: departmentForm.description,
-      manager: departmentForm.manager,
-      memberCount: 0,
-      members: departmentForm.members,
-    };
-    setDepartments(prev => [...prev, newDepartment]);
+ const newDepartment: Department = {
+  id: someId,
+  name: departmentForm.name,
+  description: departmentForm.description,
+  manager: departmentForm.manager,
+  roles: [], // or get from form input if available
+  members: departmentForm.members,
+  memberCount: departmentForm.members.length, // optional
+};
+
+setDepartments(prev => [...prev, newDepartment]);
+
     setDepartmentForm({ name: '', description: '', manager: '', roles: [], members: [] });
     setShowDepartmentForm(false);
   };
