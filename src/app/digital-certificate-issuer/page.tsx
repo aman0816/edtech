@@ -3,16 +3,24 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-// Add at the top, after imports
 type AdditionalData = {
   projectType?: string;
   duration?: number;
   grade?: string;
   skills?: string[];
   score?: number;
-  [key: string]: unknown;
 };
 
+interface Credential {
+  id: number;
+  recipientEmail: string;
+  recipientName: string;
+  schemaId: number;
+  schemaName: string;
+  issuedDate: string;
+  status: string;
+  additionalData: AdditionalData;
+}
 interface CertificateTemplate {
   id: number;
   name: string;
@@ -553,6 +561,7 @@ export default function DigitalCertificateIssuer() {
     };
 
     setIssuedCredentials(prev => [...prev, newCredential]);
+
     
     // Reset form
     setIssueForm({
