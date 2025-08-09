@@ -9,6 +9,7 @@ type AdditionalData = {
   grade?: string;
   skills?: string[];
   score?: number;
+  note?: string;
 };
 
 interface Department {
