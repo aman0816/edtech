@@ -3780,10 +3780,10 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
                 <button type="button" onClick={() => setShowIssueNewModal(false)} className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
                 <button type="submit" className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Issue Credential</button>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
+      </form>
     </div>
-  );
-} 
+  </div>
+)}
+</div>
+);
+}
