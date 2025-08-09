@@ -12,7 +12,14 @@ export default function DigitalCertificateIssuer() {
   const [showEditCertificateTemplateForm, setShowEditCertificateTemplateForm] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [editingTemplateId, setEditingTemplateId] = useState<number | null>(null);
-  const [previewingTemplate, setPreviewingTemplate] = useState<any>(null);
+  interface Template {
+  id: string;
+  name: string;
+  content: string;
+}
+
+const [previewingTemplate, setPreviewingTemplate] = useState<Template | null>(null);
+
   const [certificateTemplateForm, setCertificateTemplateForm] = useState({
     name: '',
     certificateName: '',
@@ -64,7 +71,13 @@ export default function DigitalCertificateIssuer() {
   const [showEditEmailTemplateForm, setShowEditEmailTemplateForm] = useState(false);
   const [showEmailPreviewModal, setShowEmailPreviewModal] = useState(false);
   const [editingEmailTemplateId, setEditingEmailTemplateId] = useState<number | null>(null);
-  const [previewingEmailTemplate, setPreviewingEmailTemplate] = useState<any>(null);
+ interface ApiResponse {
+  id: string;
+  name: string;
+}
+
+function handleSomething(value: ApiResponse) { ... }
+
   
   // Help & Docs States
   const [activeHelpSection, setActiveHelpSection] = useState<string>('guides');
@@ -658,7 +671,17 @@ export default function DigitalCertificateIssuer() {
   };
 
   // Generate unique certificate ID
-  const generateCertificateId = (template: any) => {
+ interface CertificateTemplate {
+  id: string;
+  title: string;
+  fields: string[];
+  backgroundUrl: string;
+}
+
+const generateCertificateId = (template: CertificateTemplate) => {
+  // ...
+};
+
     const year = new Date().getFullYear();
     const randomNum = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     const prefix = template.certificateIdPrefix || 'CERT';
