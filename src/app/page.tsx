@@ -173,7 +173,7 @@ export default function HomePage() {
             {consultationSuccess ? (
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
-                <p style={{ color: '#059669', fontWeight: '600' }}>Thank you! We'll contact you soon.</p>
+                <p style={{ color: '#059669', fontWeight: '600' }}>Thank you! We&apos;ll contact you soon.</p>
               </div>
             ) : (
               <form onSubmit={handleConsultationSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -312,7 +312,7 @@ export default function HomePage() {
             {contactSuccess ? (
               <div style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>✅</div>
-                <p style={{ color: '#059669', fontWeight: '600' }}>Thank you! We'll get back to you soon.</p>
+                <p style={{ color: '#059669', fontWeight: '600' }}>Thank you! We&apos;ll get back to you soon.</p>
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
