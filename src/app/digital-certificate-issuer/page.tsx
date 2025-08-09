@@ -3783,7 +3783,5 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
       </form>
     </div>
   </div>
-)}
-</div>
-);
-}
+); // closes return (
+} // closes function
