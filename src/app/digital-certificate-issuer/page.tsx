@@ -3,42 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-
-interface CredentialWithSkills {
-  id: number;
-  recipientEmail: string;
-  recipientName: string;
-  schemaId: number;
-  schemaName: string;
-  issuedDate: string;
-  status: string;
-  additionalData: {
-    skills: string[];
-    score: number;
-    projectType?: never;
-    duration?: never;
-    grade?: never;
-  };
-}
-
-interface CredentialWithProject {
-  id: number;
-  recipientEmail: string;
-  recipientName: string;
-  schemaId: number;
-  schemaName: string;
-  issuedDate: string;
-  status: string;
-  additionalData: {
-    projectType: string;
-    duration: string;  // changed from number to string to match your original
-    grade: string;
-    skills?: never;
-    score?: never;
-  };
-}
-
-type Credential = CredentialWithSkills | CredentialWithProject;
+// Add at the top, after imports
+type CredentialAdditionalData = {
+  projectType: string;
+  duration: number;
+  grade: string;
+  skills?: string[];
+  score?: number;
+  [key: string]: any;
+};
 
 interface CertificateTemplate {
   id: number;
@@ -549,10 +522,13 @@ export default function DigitalCertificateIssuer() {
       return;
     }
 
-    let parsedAdditionalData = {};
+    let parsedAdditionalData: any = {};
     if (issueForm.additionalData) {
       try {
         parsedAdditionalData = JSON.parse(issueForm.additionalData);
+        if (parsedAdditionalData.duration !== undefined) {
+          parsedAdditionalData.duration = Number(parsedAdditionalData.duration);
+        }
       } catch {
         alert('Invalid JSON format for additional data');
         return;
@@ -567,12 +543,16 @@ export default function DigitalCertificateIssuer() {
       schemaName: selectedSchema.name,
       issuedDate: new Date().toISOString().split('T')[0],
       status: 'Delivered',
-      additionalData: parsedAdditionalData
+      additionalData: {
+        projectType: parsedAdditionalData?.projectType ?? "",
+        duration: parsedAdditionalData?.duration ?? 0,
+        grade: parsedAdditionalData?.grade ?? "",
+        skills: parsedAdditionalData?.skills ?? [],
+        score: parsedAdditionalData?.score ?? 0
+      }
     };
 
-setIssuedCredentials(prev => [...prev, newCredential as Credential]);
-
-
+    setIssuedCredentials(prev => [...prev, newCredential]);
     
     // Reset form
     setIssueForm({
