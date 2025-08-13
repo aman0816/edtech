@@ -5,9 +5,26 @@ import React, { useEffect, useState, useRef } from 'react';
 // typings
 declare global {
   interface Window {
-    html2pdf?: any;
+    html2pdf?: Html2PdfGlobal;
   }
 }
+
+type Html2PdfOptions = {
+  margin?: number | [number, number] | [number, number, number, number];
+  filename?: string;
+  html2canvas?: { scale?: number };
+  jsPDF?: { unit?: string; format?: string | [number, number]; orientation?: 'portrait' | 'landscape' };
+};
+
+type Html2PdfInstance = {
+  from: (element: HTMLElement) => Html2PdfInstance;
+  set: (options: Html2PdfOptions) => Html2PdfInstance;
+  save: () => { then: (cb: () => void) => void };
+};
+
+type Html2PdfGlobal = (() => Html2PdfInstance) & {
+  from: (element: HTMLElement) => Html2PdfInstance;
+};
 
 type Education = {
   school: string;
