@@ -14,7 +14,14 @@ const initialData = {
   skills: ['React', 'Next.js', 'Tailwind CSS', 'JavaScript'],
 };
 
-function Section({ title, children, open, onToggle }) {
+type SectionProps = {
+  title: string;
+  children: React.ReactNode;
+  open: boolean;
+  onToggle: () => void;
+};
+
+function Section({ title, children, open, onToggle }: SectionProps) {
   return (
     <div className="mb-4 border rounded-lg bg-white shadow-sm">
       <button
