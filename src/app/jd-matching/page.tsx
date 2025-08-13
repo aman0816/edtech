@@ -95,12 +95,18 @@ export default function JDMatching() {
       const jobSkills = extractSkills(jobDescription);
       
       // For demo purposes, simulate resume skills based on analysis mode
-      let resumeSkills = [];
+      let resumeSkills = [] as string[];
       if (analysisMode === 'with-resume') {
         // Simulate extracting skills from uploaded resume
         // In real implementation, this would parse the actual resume file
         // For demo, we'll simulate different skill sets based on file name
-        const fileName = uploadedResume.name.toLowerCase();
+        const resumeFile = uploadedResume;
+        if (!resumeFile) {
+          // Safety check: state may change between checks in async callback
+          setIsAnalyzing(false);
+          return;
+        }
+        const fileName = resumeFile.name.toLowerCase();
         if (fileName.includes('java') || fileName.includes('spring')) {
           resumeSkills = ['Java', 'Spring', 'Spring Boot', 'Hibernate', 'Maven', 'SQL', 'Git'];
         } else if (fileName.includes('frontend') || fileName.includes('react')) {
