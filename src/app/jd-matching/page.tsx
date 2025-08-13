@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function JDMatching() {
   const [jobDescription, setJobDescription] = useState('');
-  const [uploadedResume, setUploadedResume] = useState(null);
+  const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [matchingScore, setMatchingScore] = useState(null);
   const [matchBreakdown, setMatchBreakdown] = useState(null);
@@ -12,7 +12,7 @@ export default function JDMatching() {
   const [matchingSkills, setMatchingSkills] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [analysisMode, setAnalysisMode] = useState('jd-only'); // 'jd-only' or 'with-resume'
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
