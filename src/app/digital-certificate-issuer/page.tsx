@@ -13,6 +13,18 @@ type AdditionalData = {
   [key: string]: unknown;
 };
 
+// Explicit type for issued credentials to avoid union-narrowing of additionalData
+type IssuedCredential = {
+  id: number;
+  recipientEmail: string;
+  recipientName: string;
+  schemaId: number;
+  schemaName: string;
+  issuedDate: string;
+  status: 'Delivered' | 'Accepted' | 'Revoked' | 'Error';
+  additionalData: AdditionalData;
+};
+
 interface CertificateTemplate {
   id: number;
   name: string;
@@ -371,7 +383,7 @@ export default function DigitalCertificateIssuer() {
   }, [schemas]);
 
   // Credential issuance state
-  const [issuedCredentials, setIssuedCredentials] = useState([
+  const [issuedCredentials, setIssuedCredentials] = useState<IssuedCredential[]>([
     {
       id: 1,
       recipientEmail: 'john.doe@example.com',
