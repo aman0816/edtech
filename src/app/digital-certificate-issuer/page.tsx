@@ -547,7 +547,7 @@ export default function DigitalCertificateIssuer() {
       }
     }
 
-    const newCredential = {
+    const newCredential: IssuedCredential = {
       id: Math.max(...issuedCredentials.map(c => c.id), 0) + 1,
       recipientEmail: issueForm.recipientEmail,
       recipientName: issueForm.recipientName,
