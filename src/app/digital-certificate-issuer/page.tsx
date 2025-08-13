@@ -3,35 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+// Add at the top, after imports
 type AdditionalData = {
   projectType?: string;
   duration?: number;
   grade?: string;
   skills?: string[];
   score?: number;
-  note?: string;
+  [key: string]: unknown;
 };
 
-interface Department {
-  id: number;
-  name: string;
-  description: string;
-  manager: string;
-  roles: string[];
-  members: number[];
-  memberCount?: number; // optional, if you want to keep track of count separately
-}
-
-interface Credential {
-  id: number;
-  recipientEmail: string;
-  recipientName: string;
-  schemaId: number;
-  schemaName: string;
-  issuedDate: string;
-  status: string;
-  additionalData: AdditionalData;
-}
 interface CertificateTemplate {
   id: number;
   name: string;
@@ -150,33 +131,32 @@ export default function DigitalCertificateIssuer() {
     department: ''
   });
   
-const [departments, setDepartments] = useState<Department[]>([
-  {
-    id: 1,
-    name: 'IT Department',
-    description: 'Information Technology and Development',
-    manager: 'John Smith',
-    roles: [],
-    members: []
-  },
-  {
-    id: 2,
-    name: 'HR Department',
-    description: 'Human Resources and Administration',
-    manager: 'Lisa Chen',
-    roles: [],
-    members: []
-  },
-  {
-    id: 3,
-    name: 'Training Department',
-    description: 'Employee Training and Development',
-    manager: 'Mike Wilson',
-    roles: [],
-    members: []
-  }
-]);
-
+  const [departments, setDepartments] = useState([
+    {
+      id: 1,
+      name: 'IT Department',
+      description: 'Information Technology and Development',
+      manager: 'John Smith',
+      roles: [],
+      members: []
+    },
+    {
+      id: 2,
+      name: 'HR Department',
+      description: 'Human Resources and Administration',
+      manager: 'Lisa Chen',
+      roles: [],
+      members: []
+    },
+    {
+      id: 3,
+      name: 'Training Department',
+      description: 'Employee Training and Development',
+      manager: 'Mike Wilson',
+      roles: [],
+      members: []
+    }
+  ]);
   
   const [users, setUsers] = useState([
     {
@@ -390,29 +370,29 @@ const [departments, setDepartments] = useState<Department[]>([
     }
   }, [schemas]);
 
-const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
-  {
-    id: 1,
-    recipientEmail: 'john.doe@example.com',
-    recipientName: 'John Doe',
-    schemaId: 1,
-    schemaName: 'Software Development Certification',
-    issuedDate: '2024-01-15',
-    status: 'Accepted',
-    additionalData: { skills: ['JavaScript', 'React'], score: 95, projectType: undefined, duration: undefined, grade: undefined }
-  },
-  {
-    id: 2,
-    recipientEmail: 'jane.smith@example.com',
-    recipientName: 'Jane Smith',
-    schemaId: 2,
-    schemaName: 'Project Management Certificate',
-    issuedDate: '2024-01-14',
-    status: 'Delivered',
-    additionalData: { projectType: 'Web Development', duration: 6, grade: 'A', skills: undefined, score: undefined }
-  }
-]);
-
+  // Credential issuance state
+  const [issuedCredentials, setIssuedCredentials] = useState([
+    {
+      id: 1,
+      recipientEmail: 'john.doe@example.com',
+      recipientName: 'John Doe',
+      schemaId: 1,
+      schemaName: 'Software Development Certification',
+      issuedDate: '2024-01-15',
+      status: 'Accepted', // Delivered, Accepted, Revoked
+      additionalData: { skills: ['JavaScript', 'React'], score: 95 }
+    },
+    {
+      id: 2,
+      recipientEmail: 'jane.smith@example.com',
+      recipientName: 'Jane Smith',
+      schemaId: 2,
+      schemaName: 'Project Management Certificate',
+      issuedDate: '2024-01-14',
+      status: 'Delivered',
+      additionalData: { projectType: 'Web Development', duration: 6, grade: 'A' }
+    }
+  ]);
 
   // Load issued credentials from localStorage on component mount
   useEffect(() => {
@@ -573,7 +553,6 @@ const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
     };
 
     setIssuedCredentials(prev => [...prev, newCredential]);
-
     
     // Reset form
     setIssueForm({
@@ -598,6 +577,24 @@ const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
     setIssuedCredentials(prev => prev.map(cred => 
       cred.id === credentialId ? { ...cred, status: newStatus } : cred
     ));
+  };
+
+  const handleMarkAccepted = (id: number) => {
+    setIssuedCredentials(prev =>
+      prev.map(cred =>
+        cred.id === id ? { ...cred, status: 'Accepted' } : cred
+      )
+    );
+  };
+
+  const handleRevoke = (id: number) => {
+    if (confirm('Are you sure you want to revoke this credential?')) {
+      setIssuedCredentials(prev =>
+        prev.map(cred =>
+          cred.id === id ? { ...cred, status: 'Revoked' } : cred
+        )
+      );
+    }
   };
 
   // Certificate template handlers
@@ -1260,21 +1257,15 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
       alert('Please fill in all required fields');
       return;
     }
-    const newId = departments.length > 0 ? Math.max(...departments.map(d => d.id)) + 1 : 1;
-
- const newDepartment: Department = {
-  id: newId,
-  name: departmentForm.name,
-  description: departmentForm.description,
-  manager: departmentForm.manager,
-  roles: [],
-  members: departmentForm.members,
-  memberCount: departmentForm.members.length // if you want this
-};
-
-setDepartments(prev => [...prev, newDepartment]);
-
-
+    const newDepartment = {
+      id: Math.max(...departments.map(d => d.id), 0) + 1,
+      name: departmentForm.name,
+      description: departmentForm.description,
+      manager: departmentForm.manager,
+      memberCount: 0,
+      members: departmentForm.members,
+    };
+    setDepartments(prev => [...prev, newDepartment]);
     setDepartmentForm({ name: '', description: '', manager: '', roles: [], members: [] });
     setShowDepartmentForm(false);
   };
@@ -2075,108 +2066,91 @@ setDepartments(prev => [...prev, newDepartment]);
                 </div>
               </div>
 
-              // Your issuedCredentials state example (adjust if you have it already)
-
-
- export default function DigitalCertificateIssuer() {
-  // your state hooks here
-
-  // Place your handler functions here, before return:
-  const handleMarkAccepted = (id: number) => {
-    setIssuedCredentials(prev =>
-      prev.map(cred =>
-        cred.id === id ? { ...cred, status: 'Accepted' } : cred
-      )
-    );
-  };
-
-  const handleRevoke = (id: number) => {
-    if (confirm('Are you sure you want to revoke this credential?')) {
-      setIssuedCredentials(prev =>
-        prev.map(cred =>
-          cred.id === id ? { ...cred, status: 'Revoked' } : cred
-        )
+              {/* Table */}
+              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left">
+                        <input type="checkbox" className="rounded" />
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connected Through</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schema</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credential Attributes</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {credentialsLoading ? (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-12 text-center">
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-600"></div>
+                            <span className="ml-2 text-gray-500">Loading credentials...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    ) : filteredCredentials.length === 0 ? (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-12 text-center text-gray-500">No credentials found.</td>
+                      </tr>
+                    ) : (
+                      filteredCredentials.map((cred) => (
+                        <tr key={cred.id}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <input type="checkbox" className="rounded" />
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="text-sm font-medium text-gray-900">{cred.recipientName}</div>
+                            <div className="text-sm text-gray-500">{cred.recipientEmail}</div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{cred.schemaName}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            {cred.additionalData && typeof cred.additionalData === 'object'
+                              ? Object.entries(cred.additionalData).map(([k, v]) => `${k}: ${v}`).join(', ')
+                              : '-'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <span className={`px-2 py-1 rounded text-xs ${
+                              cred.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                              cred.status === 'Delivered' ? 'bg-blue-100 text-blue-800' :
+                              cred.status === 'Revoked' ? 'bg-red-100 text-red-800' :
+                              cred.status === 'Error' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-gray-100 text-gray-800'
+                            }`}>
+                              {cred.status}
+                            </span>
+                            {cred.status === 'Delivered' && (
+                              <button
+                                className="ml-2 text-xs text-green-700 hover:underline"
+                                onClick={() => handleMarkAccepted(cred.id)}
+                              >
+                                Mark Accepted
+                              </button>
+                            )}
+                            {cred.status !== 'Revoked' && (
+                              <button
+                                className="ml-2 text-xs text-red-700 hover:underline"
+                                onClick={() => handleRevoke(cred.id)}
+                              >
+                                Revoke
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     }
-  };
 
-
-
-  // Now put your JSX *inside* the return statement
-  return (
-    <div>
-      {/* Table */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left">
-                <input type="checkbox" className="rounded" />
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Connected Through</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Schema</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Credential Attributes</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {issuedCredentials.length === 0 ? (
-              <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-gray-500">No credentials found.</td>
-              </tr>
-            ) : (
-              issuedCredentials.map((cred) => (
-                <tr key={cred.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <input type="checkbox" className="rounded" />
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{cred.recipientName}</div>
-                    <div className="text-sm text-gray-500">{cred.recipientEmail}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{cred.schemaName}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {cred.additionalData && typeof cred.additionalData === 'object'
-                      ? Object.entries(cred.additionalData).map(([k, v]) => `${k}: ${v}`).join(', ')
-                      : '-'}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 rounded text-xs ${
-                      cred.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                      cred.status === 'Delivered' ? 'bg-blue-100 text-blue-800' :
-                      cred.status === 'Revoked' ? 'bg-red-100 text-red-800' :
-                      'bg-gray-100 text-gray-800'
-                    }`}>
-                      {cred.status}
-                    </span>
-                    {cred.status === 'Delivered' && (
-                      <button
-                        className="ml-2 text-xs text-green-700 hover:underline"
-                        onClick={() => handleMarkAccepted(cred.id)}
-                      >
-                        Mark Accepted
-                      </button>
-                    )}
-                    {cred.status !== 'Revoked' && (
-                      <button
-                        className="ml-2 text-xs text-red-700 hover:underline"
-                        onClick={() => handleRevoke(cred.id)}
-                      >
-                        Revoke
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
     if (activeSubSection === 'schemas') {
       return (
         <div className="space-y-6">
