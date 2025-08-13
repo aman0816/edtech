@@ -25,6 +25,15 @@ type IssuedCredential = {
   additionalData: AdditionalData;
 };
 
+interface Department {
+  id: number;
+  name: string;
+  description: string;
+  manager: string;
+  roles: string[];
+  members: number[]; // user IDs
+}
+
 interface CertificateTemplate {
   id: number;
   name: string;
@@ -143,30 +152,30 @@ export default function DigitalCertificateIssuer() {
     department: ''
   });
   
-  const [departments, setDepartments] = useState([
+  const [departments, setDepartments] = useState<Department[]>([
     {
       id: 1,
       name: 'IT Department',
       description: 'Information Technology and Development',
       manager: 'John Smith',
-      roles: [],
-      members: []
+      roles: [] as string[],
+      members: [] as number[]
     },
     {
       id: 2,
       name: 'HR Department',
       description: 'Human Resources and Administration',
       manager: 'Lisa Chen',
-      roles: [],
-      members: []
+      roles: [] as string[],
+      members: [] as number[]
     },
     {
       id: 3,
       name: 'Training Department',
       description: 'Employee Training and Development',
       manager: 'Mike Wilson',
-      roles: [],
-      members: []
+      roles: [] as string[],
+      members: [] as number[]
     }
   ]);
   
@@ -1274,7 +1283,7 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
       name: departmentForm.name,
       description: departmentForm.description,
       manager: departmentForm.manager,
-      memberCount: 0,
+      roles: departmentForm.roles,
       members: departmentForm.members,
     };
     setDepartments(prev => [...prev, newDepartment]);
@@ -1432,7 +1441,9 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
         schemaName: schema.name,
         issuedDate: new Date().toISOString().slice(0, 10),
         status: 'Delivered',
-        additionalData: issueExistingForm.additionalData ? { note: issueExistingForm.additionalData } : {}
+        additionalData: issueExistingForm.additionalData
+          ? { projectType: '', duration: 0, grade: '', skills: [], score: 0, note: issueExistingForm.additionalData }
+          : { projectType: '', duration: 0, grade: '', skills: [], score: 0 }
       }
     ]);
     setShowIssueExistingModal(false);
@@ -1453,7 +1464,9 @@ jane.smith@example.com,Jane Smith,1,"{""course_name"":""Data Science"",""score""
         schemaName: schema.name,
         issuedDate: new Date().toISOString().slice(0, 10),
         status: 'Delivered',
-        additionalData: issueNewForm.additionalData ? { note: issueNewForm.additionalData } : {}
+        additionalData: issueNewForm.additionalData
+          ? { projectType: '', duration: 0, grade: '', skills: [], score: 0, note: issueNewForm.additionalData }
+          : { projectType: '', duration: 0, grade: '', skills: [], score: 0 }
       }
     ]);
     setShowIssueNewModal(false);
