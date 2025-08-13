@@ -2,6 +2,42 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 
+// typings
+declare global {
+  interface Window {
+    html2pdf?: any;
+  }
+}
+
+type Education = {
+  school: string;
+  degree: string;
+  start: string;
+  end: string;
+  description: string;
+};
+
+type Experience = {
+  company: string;
+  role: string;
+  start: string;
+  end: string;
+  description: string;
+};
+
+type Project = {
+  title: string;
+  description: string;
+};
+
+type ResumeForm = {
+  name: string;
+  education: Education[];
+  experience: Experience[];
+  projects: Project[];
+  skills: string[];
+};
+
 const templates = [
   {
     name: 'Modern',
@@ -20,7 +56,7 @@ const templates = [
   },
 ];
 
-const exampleData = {
+const exampleData: ResumeForm = {
   name: 'John Doe',
   education: [
     { school: 'ABC University', degree: 'B.Tech in Computer Science', start: '2018', end: '2022', description: 'Graduated with Honors' },
@@ -34,7 +70,15 @@ const exampleData = {
   skills: ['React', 'Next.js', 'Tailwind CSS', 'JavaScript'],
 };
 
-function Section({ title, children, open, onToggle, color }) {
+type SectionProps = {
+  title: string;
+  children: React.ReactNode;
+  open: boolean;
+  onToggle: () => void;
+  color: string;
+};
+
+function Section({ title, children, open, onToggle, color }: SectionProps) {
   return (
     <div className="mb-5 rounded-2xl shadow-lg bg-white/90 border border-gray-200 transition-transform duration-300 hover:scale-[1.01]">
       <button
@@ -53,9 +97,14 @@ function Section({ title, children, open, onToggle, color }) {
   );
 }
 
+type ListSection = 'education' | 'experience' | 'projects';
+type OpenSection = '' | ListSection | 'skills';
+
+type HistoryItem = { data: ResumeForm; ts: number };
+
 export default function LiveResumePreview() {
-  const [form, setForm] = useState(exampleData);
-  const [openSection, setOpenSection] = useState('education');
+  const [form, setForm] = useState<ResumeForm>(exampleData);
+  const [openSection, setOpenSection] = useState<OpenSection>('education');
   const [templateIdx, setTemplateIdx] = useState(0);
   const [fontSize, setFontSize] = useState('text-base');
   const [fontFamily, setFontFamily] = useState('font-sans');
@@ -64,19 +113,19 @@ export default function LiveResumePreview() {
   const [pdfLoading, setPdfLoading] = useState(false);
 
   // Section handlers
-  const handleChange = (section, idx, field, value) => {
+  const handleChange = (section: ListSection, idx: number, field: string, value: string) => {
     setForm(prev => ({
       ...prev,
       [section]: prev[section].map((item, i) => i === idx ? { ...item, [field]: value } : item),
     }));
   };
-  const handleSkillChange = (idx, value) => {
+  const handleSkillChange = (idx: number, value: string) => {
     setForm(prev => ({
       ...prev,
       skills: prev.skills.map((s, i) => i === idx ? value : s),
     }));
   };
-  const addEntry = section => {
+  const addEntry = (section: ListSection) => {
     const empty = section === 'education'
       ? { school: '', degree: '', start: '', end: '', description: '' }
       : section === 'experience'
@@ -86,14 +135,14 @@ export default function LiveResumePreview() {
       : '';
     setForm(prev => ({ ...prev, [section]: [...prev[section], empty] }));
   };
-  const removeEntry = (section, idx) => {
+  const removeEntry = (section: ListSection, idx: number) => {
     setForm(prev => ({ ...prev, [section]: prev[section].filter((_, i) => i !== idx) }));
   };
   const addSkill = () => setForm(prev => ({ ...prev, skills: [...prev.skills, ''] }));
-  const removeSkill = idx => setForm(prev => ({ ...prev, skills: prev.skills.filter((_, i) => i !== idx) }));
+  const removeSkill = (idx: number) => setForm(prev => ({ ...prev, skills: prev.skills.filter((_, i) => i !== idx) }));
 
   // Add handler for name
-  const handleNameChange = (e) => setForm(prev => ({ ...prev, name: e.target.value }));
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setForm(prev => ({ ...prev, name: e.target.value }));
 
   // Reset/Clear
   const resetExample = () => setForm(exampleData);
@@ -101,8 +150,8 @@ export default function LiveResumePreview() {
 
   // Version history state
   const [showHistory, setShowHistory] = useState(false);
-  const [history, setHistory] = useState([]);
-  const saveTimeout = useRef(null);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const saveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -133,17 +182,19 @@ export default function LiveResumePreview() {
     saveTimeout.current = setTimeout(() => {
       localStorage.setItem('resume-autosave', JSON.stringify(form));
       // Save version history
-      const hist = JSON.parse(localStorage.getItem('resume-history') || '[]');
+      const hist: HistoryItem[] = JSON.parse(localStorage.getItem('resume-history') || '[]');
       hist.unshift({ data: form, ts: Date.now() });
       // Keep only last 10 versions
       localStorage.setItem('resume-history', JSON.stringify(hist.slice(0, 10)));
       setHistory(hist.slice(0, 10));
     }, 600);
-    return () => clearTimeout(saveTimeout.current);
+    return () => {
+      if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    };
   }, [form]);
 
   // Restore version
-  const restoreVersion = (version) => {
+  const restoreVersion = (version: HistoryItem) => {
     setForm(version.data);
     setShowHistory(false);
   };
