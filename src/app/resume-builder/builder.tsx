@@ -1,7 +1,35 @@
 import React, { useState } from 'react';
 
 // Dummy data for initial load
-const initialData = {
+interface Education {
+  school: string;
+  degree: string;
+  start: string;
+  end: string;
+  description: string;
+}
+
+interface Experience {
+  company: string;
+  role: string;
+  start: string;
+  end: string;
+  description: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+}
+
+interface ResumeForm {
+  education: Education[];
+  experience: Experience[];
+  projects: Project[];
+  skills: string[];
+}
+
+const initialData: ResumeForm = {
   education: [
     { school: 'ABC University', degree: 'B.Tech in Computer Science', start: '2018', end: '2022', description: 'Graduated with Honors' },
   ],
@@ -37,24 +65,27 @@ function Section({ title, children, open, onToggle }: SectionProps) {
   );
 }
 
+type ListSection = 'education' | 'experience' | 'projects';
+type OpenSection = '' | ListSection | 'skills';
+
 export default function ResumeBuilder() {
-  const [form, setForm] = useState(initialData);
-  const [openSection, setOpenSection] = useState('education');
+  const [form, setForm] = useState<ResumeForm>(initialData);
+  const [openSection, setOpenSection] = useState<OpenSection>('education');
 
   // Handlers for each section
-  const handleChange = (section, idx, field, value) => {
+  const handleChange = (section: ListSection, idx: number, field: string, value: string) => {
     setForm(prev => ({
       ...prev,
       [section]: prev[section].map((item, i) => i === idx ? { ...item, [field]: value } : item),
     }));
   };
-  const handleSkillChange = (idx, value) => {
+  const handleSkillChange = (idx: number, value: string) => {
     setForm(prev => ({
       ...prev,
       skills: prev.skills.map((s, i) => i === idx ? value : s),
     }));
   };
-  const addEntry = section => {
+  const addEntry = (section: ListSection) => {
     const empty = section === 'education'
       ? { school: '', degree: '', start: '', end: '', description: '' }
       : section === 'experience'
