@@ -70,6 +70,7 @@ export default function DigitalCertificateIssuer() {
     name: '',
     certificateName: '',
     course: '',
+    description: '',
     design: 'default',
     status: 'Active',
     includeStudentName: true,
