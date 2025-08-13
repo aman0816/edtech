@@ -2,6 +2,12 @@
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 
+type Suggestion = {
+  category: string;
+  suggestion: string;
+  priority: 'High' | 'Medium' | 'Low' | 'Info';
+};
+
 export default function JDMatching() {
   const [jobDescription, setJobDescription] = useState('');
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
@@ -10,7 +16,7 @@ export default function JDMatching() {
   const [matchBreakdown, setMatchBreakdown] = useState(null);
   const [missingSkills, setMissingSkills] = useState<string[]>([]);
   const [matchingSkills, setMatchingSkills] = useState<string[]>([]);
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [analysisMode, setAnalysisMode] = useState('jd-only'); // 'jd-only' or 'with-resume'
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -148,7 +154,7 @@ export default function JDMatching() {
       setMatchBreakdown(breakdown);
 
       // Generate suggestions based on actual missing skills
-      const newSuggestions = [];
+      const newSuggestions: Suggestion[] = [];
       
       if (missing.length > 0) {
         newSuggestions.push({
