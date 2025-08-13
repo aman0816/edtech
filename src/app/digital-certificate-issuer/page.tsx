@@ -2078,7 +2078,10 @@ setDepartments(prev => [...prev, newDepartment]);
               // Your issuedCredentials state example (adjust if you have it already)
 
 
-  // Add the handler functions *before* the return statement
+ export default function DigitalCertificateIssuer() {
+  // your state hooks here
+
+  // Place your handler functions here, before return:
   const handleMarkAccepted = (id: number) => {
     setIssuedCredentials(prev =>
       prev.map(cred =>
@@ -2088,17 +2091,16 @@ setDepartments(prev => [...prev, newDepartment]);
   };
 
   const handleRevoke = (id: number) => {
-    setIssuedCredentials(prev =>
-      prev.map(cred =>
-        cred.id === id ? { ...cred, status: 'Revoked' } : cred
-      )
-    );
+    if (confirm('Are you sure you want to revoke this credential?')) {
+      setIssuedCredentials(prev =>
+        prev.map(cred =>
+          cred.id === id ? { ...cred, status: 'Revoked' } : cred
+        )
+      );
+    }
   };
-     export default function DigitalCertificateIssuer() {
 
-  const [issuedCredentials, setIssuedCredentials] = useState<Credential[]>([
-  
-  ]);
+
 
   // Now put your JSX *inside* the return statement
   return (
