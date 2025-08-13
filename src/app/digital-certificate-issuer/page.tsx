@@ -684,10 +684,11 @@ export default function DigitalCertificateIssuer() {
         name: template.name,
         certificateName: template.certificateName || '',
         course: template.course || '',
+        description: template.description || '',
         design: template.design,
         status: template.status,
-        includeStudentName: template.includeStudentName || true,
-        includeCertificateId: template.includeCertificateId || true,
+        includeStudentName: template.includeStudentName ?? true,
+        includeCertificateId: template.includeCertificateId ?? true,
         certificateIdPrefix: template.certificateIdPrefix || 'CERT'
       });
       setEditingTemplateId(templateId);
