@@ -8,9 +8,9 @@ export default function JDMatching() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [matchingScore, setMatchingScore] = useState(null);
   const [matchBreakdown, setMatchBreakdown] = useState(null);
-  const [missingSkills, setMissingSkills] = useState([]);
-  const [matchingSkills, setMatchingSkills] = useState([]);
-  const [suggestions, setSuggestions] = useState([]);
+  const [missingSkills, setMissingSkills] = useState<string[]>([]);
+  const [matchingSkills, setMatchingSkills] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const [analysisMode, setAnalysisMode] = useState('jd-only'); // 'jd-only' or 'with-resume'
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
