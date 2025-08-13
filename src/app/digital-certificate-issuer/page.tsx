@@ -585,7 +585,7 @@ export default function DigitalCertificateIssuer() {
     }
   };
 
-  const updateCredentialStatus = (credentialId: number, newStatus: string) => {
+  const updateCredentialStatus = (credentialId: number, newStatus: IssuedCredential['status']) => {
     setIssuedCredentials(prev => prev.map(cred => 
       cred.id === credentialId ? { ...cred, status: newStatus } : cred
     ));
