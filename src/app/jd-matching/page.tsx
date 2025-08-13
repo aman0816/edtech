@@ -38,8 +38,8 @@ export default function JDMatching() {
   };
 
   // Function to extract skills from text
-  const extractSkills = (text) => {
-    const skillKeywords = {
+  const extractSkills = (text: string): string[] => {
+    const skillKeywords: Record<string, string[]> = {
       'Testing': ['testing', 'test', 'qa', 'quality assurance', 'selenium', 'junit', 'testng', 'cypress', 'playwright', 'manual testing', 'automation testing', 'api testing', 'performance testing', 'load testing', 'security testing', 'bug', 'defect', 'test case', 'test plan'],
       'Java': ['java', 'spring', 'spring boot', 'hibernate', 'maven', 'gradle', 'junit', 'testng', 'servlet', 'jsp', 'jdbc', 'jpa', 'microservices'],
       'JavaScript': ['javascript', 'js', 'node.js', 'nodejs', 'express', 'react', 'angular', 'vue', 'typescript', 'es6', 'jquery', 'ajax'],
@@ -54,7 +54,7 @@ export default function JDMatching() {
       'Tools': ['git', 'jenkins', 'jira', 'confluence', 'postman', 'swagger', 'maven', 'gradle']
     };
 
-    const foundSkills = [];
+    const foundSkills: string[] = [];
     const textLower = text.toLowerCase();
 
     for (const [skill, keywords] of Object.entries(skillKeywords)) {
