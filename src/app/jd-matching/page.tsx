@@ -8,12 +8,20 @@ type Suggestion = {
   priority: 'High' | 'Medium' | 'Low' | 'Info';
 };
 
+type MatchBreakdown = {
+  skills: number;
+  experience: number;
+  keywords: number;
+  education: number;
+  certifications: number;
+};
+
 export default function JDMatching() {
   const [jobDescription, setJobDescription] = useState('');
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [matchingScore, setMatchingScore] = useState(null);
-  const [matchBreakdown, setMatchBreakdown] = useState(null);
+  const [matchingScore, setMatchingScore] = useState<number>(0);
+  const [matchBreakdown, setMatchBreakdown] = useState<MatchBreakdown | null>(null);
   const [missingSkills, setMissingSkills] = useState<string[]>([]);
   const [matchingSkills, setMatchingSkills] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -87,7 +95,7 @@ export default function JDMatching() {
     }
 
     setIsAnalyzing(true);
-    setMatchingScore(null);
+    setMatchingScore(0);
     setMatchBreakdown(null);
     setMissingSkills([]);
     setMatchingSkills([]);
@@ -606,7 +614,7 @@ export default function JDMatching() {
                 onClick={() => {
                   setJobDescription('');
                   setUploadedResume(null);
-                  setMatchingScore(null);
+                  setMatchingScore(0);
                   setMatchBreakdown(null);
                   setMissingSkills([]);
                   setMatchingSkills([]);
